@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN7 - Game 01</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        html { min-height: 100%; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            background-image:
+                linear-gradient(
+                    rgba(8, 11, 24, 0.45),
+                    rgba(8, 11, 24, 0.65)
+                ),
+                url("./images/win7-hero.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        header {
+            padding: 22px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 11, 24, 0.75);
+            border-bottom: 1px solid #444;
+        }
+
+        .logo {
+            color: #9B5CFF;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        header a:hover { color: #00D6C9; }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1 { font-size: 40px; }
+        h1 span, h2 { color: #9B5CFF; }
+
+        .description {
+            color: #ddd;
+            line-height: 1.7;
+        }
+
+        .info {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .info div, .summary, .payment {
+            background: rgba(21, 23, 42, 0.93);
+            border: 1px solid #9B5CFF;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .info div { min-width: 180px; }
+
+        .info strong {
+            display: block;
+            color: #00D6C9;
+            font-size: 24px;
+            margin-top: 8px;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 9px;
+            margin: 25px 0;
+        }
+
+        .number {
+            background: rgba(21, 23, 42, 0.95);
+            color: white;
+            border: 1px solid #49405e;
+            border-radius: 8px;
+            padding: 14px 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .number:hover {
+            border-color: #00D6C9;
+            transform: translateY(-2px);
+        }
+
+        .number.selected {
+            background: #9B5CFF;
+            border: 2px solid #00D6C9;
+        }
+
+        .summary { margin-top: 25px; }
+
+        .summary p { line-height: 1.8; }
+
+        #selectedNumbers {
+            color: #00D6C9;
+            word-break: break-word;
+        }
+
+        .total {
+            color: #00D6C9;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .main-btn {
+            background: #9B5CFF;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px 0 0;
+            font-size: 14px;
+        }
+
+        .main-btn:hover:not(:disabled) {
+            background: #00D6C9;
+            color: #080B18;
+        }
+
+        .main-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .payment {
+            margin-top: 35px;
+        }
+
+        .payment-option {
+            display: block;
+            padding: 17px;
+            margin: 12px 0;
+            background: rgba(8, 11, 24, 0.85);
+            border: 1px solid #49405e;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .payment-option:hover { border-color: #9B5CFF; }
+
+        .payment-option input {
+            margin-right: 12px;
+            accent-color: #9B5CFF;
+        }
+
+        .account-details {
+            background: rgba(8, 11, 24, 0.85);
+            border: 1px solid #00D6C9;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+        }
+
+        #accountNumber {
+            color: #00D6C9;
+            font-size: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        .warning {
+            color: #FFD166;
+            font-weight: bold;
+        }
+
+        #receiptUpload {
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(8, 11, 24, 0.85);
+            color: white;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #49405e;
+        }
+
+        #previewImage {
+            display: block;
+            max-width: 100%;
+            max-height: 350px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid #9B5CFF;
+        }
+
+        #receiptMessage {
+            color: #00D6C9;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #49405e;
+            margin: 25px 0;
+        }
+
+        [hidden] { display: none !important; }
+
+        @media(max-width: 600px) {
+            .number-grid { grid-template-columns: repeat(5, 1fr); }
+            h1 { font-size: 28px; }
+            .container { padding: 30px 15px; }
+            header { padding: 18px 5%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">WIN7</div>
+        <a href="index.html">← BACK HOME</a>
+    </header>
+
+    <main class="container">
+
+        <h1>ተጫወት! <span>GAME 01</span></h1>
+
+        <p class="description">
+            Welcome to WIN7!
+            Choose your lucky numbers and enjoy the demo experience.
+            Select as many different numbers as you want.
+        </p>
+
+        <div class="info">
+            <div>
+                TICKET PRICE
+                <strong>100 Birr</strong>
+            </div>
+
+            <div>
+                AVAILABLE NUMBERS
+                <strong>50</strong>
+            </div>
+        </div>
+
+        <h3>CHOOSE YOUR LUCKY NUMBERS</h3>
+
+        <p class="description">
+            Click a number to select it.
+            Click it again to remove it.
+        </p>
+
+        <div class="number-grid" id="numberGrid"></div>
+
+        <section class="summary">
+
+            <h3>YOUR SELECTION</h3>
+
+            <p>
+                Selected numbers:
+                <strong id="selectedNumbers">None</strong>
+            </p>
+
+            <p>
+                Number of tickets:
+                <strong id="ticketCount">0</strong>
+            </p>
+
+            <p>
+                Total price:
+                <span class="total" id="totalPrice">0 Birr</span>
+            </p>
+
+            <button class="main-btn" id="clearBtn" type="button">
+                CLEAR SELECTION
+            </button>
+
+            <button class="main-btn" id="continueBtn" type="button" disabled>
+                CONTINUE →
+            </button>
+
+        </section>
+
+        <section class="payment" id="paymentSection" hidden>
+
+            <h2>PAYMENT INFORMATION</h2>
+
+            <p>
+                Selected numbers:
+                <strong id="paymentNumbers"></strong>
+            </p>
+
+            <p>
+                Number of tickets:
+                <strong id="paymentCount"></strong>
+            </p>
+
+            <p>
+                Total amount:
+                <strong class="total" id="paymentTotal"></strong>
+            </p>
+
+            <p class="warning">
+                DEMO PROJECT — DO NOT SEND REAL MONEY.
+            </p>
+
+            <hr>
+
+            <h3>CHOOSE PAYMENT METHOD</h3>
+
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="Telebirr">
+                <strong>TELEBIRR</strong>
+            </label>
+
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="CBE">
+                <strong>COMMERCIAL BANK OF ETHIOPIA (CBE)</strong>
+            </label>
+
+            <div class="account-details" id="accountDetails" hidden>
+
+                <h3>ACCOUNT DETAILS</h3>
+
+                <p>
+                    Account holder:
+                    <strong>Henok Alebachew</strong>
+                </p>
+
+                <p id="accountLabel"></p>
+
+                <h2 id="accountNumber"></h2>
+
+                <button type="button" class="main-btn" id="copyAccountBtn">
+                    COPY ACCOUNT NUMBER
+                </button>
+
+            </div>
+
+            <hr>
+
+            <h3>UPLOAD PAYMENT SCREENSHOT</h3>
+
+            <p class="description">
+                Select your demo receipt screenshot.
+                Maximum image size: 5 MB.
+            </p>
+
+            <input
+                type="file"
+                id="receiptUpload"
+                accept="image/*"
+            >
+
+            <div id="receiptPreview" hidden>
+                <h3>RECEIPT PREVIEW</h3>
+                <img id="previewImage" alt="Payment receipt preview">
+            </div>
+
+            <p class="description">
+                Demo only: the screenshot is previewed on this device.
+                It is not uploaded or saved in Firebase.
+            </p>
+
+            <button
+                type="button"
+                class="main-btn"
+                id="submitReceiptBtn">
+                SUBMIT DEMO ORDER →
+            </button>
+
+            <p id="receiptMessage"></p>
+
+        </section>
+
+    </main>
+
+    <!-- FIREBASE AND GAME JAVASCRIPT -->
+
+    <script type="module">
+
+        // FIREBASE IMPORTS
+
+        import { initializeApp } from
+            "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        } from
+            "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            serverTimestamp
+        } from
+            "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+      /* REPLACE WITH YOUR FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyAKhGdBzND-5g7BCZvnhetaxjotCs92TNg",
+
+    authDomain: "win7-dc908.firebaseapp.com",
+
+    projectId: "win7-dc908",
+
+    appId: "1:908163339911:web:8742dab21da4debef00a22"
+
+};
+
+
+        // INITIALIZE FIREBASE
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, function(user) {
+            currentUser = user;
+        });
+
+
+        // GAME SETTINGS
+
+        const TICKET_PRICE = 100;
+
+        let selectedNumbers = [];
+        let chosenPayment = "";
+
+        const grid = document.getElementById("numberGrid");
+
+        const selectedNumbersText =
+            document.getElementById("selectedNumbers");
+
+        const ticketCount =
+            document.getElementById("ticketCount");
+
+        const totalPrice =
+            document.getElementById("totalPrice");
+
+        const continueBtn =
+            document.getElementById("continueBtn");
+
+        const paymentSection =
+            document.getElementById("paymentSection");
+
+
+        // CREATE 50 NUMBERS
+
+        for (let i = 1; i <= 50; i++) {
+
+            const btn = document.createElement("button");
+
+            btn.type = "button";
+            btn.className = "number";
+            btn.textContent = String(i).padStart(2, "0");
+
+            btn.addEventListener("click", function() {
+
+                if (selectedNumbers.includes(i)) {
+
+                    selectedNumbers =
+                        selectedNumbers.filter(n => n !== i);
+
+                    btn.classList.remove("selected");
+
+                } else {
+
+                    selectedNumbers.push(i);
+                    btn.classList.add("selected");
+
+                }
+
+                updateSummary();
+
+                paymentSection.hidden = true;
+
+                document.getElementById("receiptMessage").textContent = "";
+
+            });
+
+            grid.appendChild(btn);
+        }
+
+
+        // UPDATE SUMMARY
+
+        function updateSummary() {
+
+            selectedNumbers.sort((a, b) => a - b);
+
+            const count = selectedNumbers.length;
+            const total = count * TICKET_PRICE;
+
+            selectedNumbersText.textContent =
+                count > 0
+                    ? selectedNumbers.map(n =>
+                        String(n).padStart(2, "0")
+                    ).join(", ")
+                    : "None";
+
+            ticketCount.textContent = count;
+
+            totalPrice.textContent =
+                total.toLocaleString() + " Birr";
+
+            continueBtn.disabled = count === 0;
+        }
+
+
+        // CLEAR SELECTION
+
+        document.getElementById("clearBtn")
+            .addEventListener("click", function() {
+
+                selectedNumbers = [];
+
+                document.querySelectorAll(".number").forEach(btn => {
+                    btn.classList.remove("selected");
+                });
+
+                paymentSection.hidden = true;
+
+                document.getElementById("receiptMessage").textContent = "";
+
+                updateSummary();
+
+            });
+
+
+        // CONTINUE TO PAYMENT
+
+        continueBtn.addEventListener("click", function() {
+
+            if (selectedNumbers.length === 0) return;
+
+            const count = selectedNumbers.length;
+            const total = count * TICKET_PRICE;
+
+            document.getElementById("paymentNumbers").textContent =
+                selectedNumbers.map(n =>
+                    String(n).padStart(2, "0")
+                ).join(", ");
+
+            document.getElementById("paymentCount").textContent = count;
+
+            document.getElementById("paymentTotal").textContent =
+                total.toLocaleString() + " Birr";
+
+            paymentSection.hidden = false;
+
+            paymentSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        });
+
+
+        // PAYMENT METHOD SELECTION
+
+        const paymentRadios =
+            document.querySelectorAll('input[name="paymentMethod"]');
+
+        const accountDetails =
+            document.getElementById("accountDetails");
+
+        const accountLabel =
+            document.getElementById("accountLabel");
+
+        const accountNumber =
+            document.getElementById("accountNumber");
+
+
+        paymentRadios.forEach(radio => {
+
+            radio.addEventListener("change", function() {
+
+                chosenPayment = this.value;
+
+                accountDetails.hidden = false;
+
+                document.getElementById("receiptMessage").textContent = "";
+
+                if (chosenPayment === "Telebirr") {
+
+                    accountLabel.textContent = "TELEBIRR NUMBER";
+                    accountNumber.textContent = "0901889915";
+
+                } else {
+
+                    accountLabel.textContent = "CBE ACCOUNT NUMBER";
+                    accountNumber.textContent = "1000719035594";
+
+                }
+
+            });
+
+        });
+
+
+        // COPY ACCOUNT NUMBER
+
+        document.getElementById("copyAccountBtn")
+            .addEventListener("click", async function() {
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        accountNumber.textContent
+                    );
+
+                    this.textContent = "COPIED!";
+
+                } catch (error) {
+
+                    this.textContent = "COPY NOT AVAILABLE";
+
+                }
+
+            });
+
+
+        // RECEIPT IMAGE PREVIEW
+
+        const receiptUpload =
+            document.getElementById("receiptUpload");
+
+        receiptUpload.addEventListener("change", function() {
+
+            const file = this.files[0];
+
+            document.getElementById("receiptMessage").textContent = "";
+
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+
+                alert("Please upload an image.");
+
+                this.value = "";
+
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+
+                alert("Image must be smaller than 5 MB.");
+
+                this.value = "";
+
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                document.getElementById("previewImage").src =
+                    event.target.result;
+
+                document.getElementById("receiptPreview").hidden = false;
+
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+
+        // SUBMIT DEMO ORDER TO FIRESTORE
+
+        document.getElementById("submitReceiptBtn")
+            .addEventListener("click", async function() {
+
+                const submitButton = this;
+                const file = receiptUpload.files[0];
+
+                if (!currentUser) {
+
+                    alert("Please sign in first.");
+
+                    window.location.href = "auth.html";
+
+                    return;
+                }
+
+                if (selectedNumbers.length === 0) {
+
+                    alert("Please select your numbers.");
+
+                    return;
+                }
+
+                if (!chosenPayment) {
+
+                    alert("Please choose a payment method.");
+
+                    return;
+                }
+
+                if (!file) {
+
+                    alert("Please select your demo receipt screenshot.");
+
+                    return;
+                }
+
+                const count = selectedNumbers.length;
+                const total = count * TICKET_PRICE;
+
+                submitButton.disabled = true;
+                submitButton.textContent = "SAVING DEMO ORDER...";
+
+                try {
+
+                    await addDoc(collection(db, "orders"), {
+
+                        uid: currentUser.uid,
+
+                        email: currentUser.email || "",
+
+                        game: "Game 1",
+
+                        numbers: [...selectedNumbers],
+
+                        ticketCount: count,
+
+                        amount: total,
+
+                        status: "pending",
+
+                        createdAt: serverTimestamp()
+
+                    });
+
+                    document.getElementById("receiptMessage").textContent =
+                        "DEMO ORDER SAVED SUCCESSFULLY! Your order is pending.";
+
+                    submitButton.textContent = "DEMO ORDER SAVED";
+
+                } catch (error) {
+
+                    console.error("Firestore error:", error);
+
+                    document.getElementById("receiptMessage").textContent =
+                        "ERROR: " + error.message;
+
+                    submitButton.disabled = false;
+                    submitButton.textContent = "TRY AGAIN";
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

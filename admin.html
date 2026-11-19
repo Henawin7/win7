@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIN7 Admin Dashboard</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #080B18;
+    color: white;
+    min-height: 100vh;
+}
+
+header {
+    background: #111529;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #292d44;
+}
+
+.logo {
+    color: #9B5CFF;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: #171a2d;
+    padding: 25px;
+    border-radius: 13px;
+    border: 1px solid #30344d;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 5px;
+}
+
+.muted {
+    color: #aeb3c8;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: #222640;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.stat h2 {
+    color: #00D6C9;
+    margin-top: 10px;
+    font-size: 30px;
+    overflow-wrap: anywhere;
+}
+
+.total-value {
+    margin-top: 15px;
+}
+
+.total-value h2 {
+    color: #00D6C9;
+    margin-top: 12px;
+    font-size: 30px;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.primary {
+    background: #9B5CFF;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.logout {
+    background: #ff4757;
+    color: white;
+}
+
+.refresh {
+    background: #00D6C9;
+    color: #080B18;
+}
+
+.approve {
+    background: #00D6C9;
+    color: #080B18;
+}
+
+.reject {
+    background: #ff4757;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+#status {
+    margin-top: 15px;
+    color: #00D6C9;
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.order {
+    background: #222640;
+    border: 1px solid #3b405d;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.order h3 {
+    color: #00D6C9;
+    margin-bottom: 12px;
+}
+
+.order p {
+    margin-top: 8px;
+    color: #d5d8e5;
+    overflow-wrap: anywhere;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.order-status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.pending {
+    background: #f0b429;
+    color: #111;
+}
+
+.approved {
+    background: #00D6C9;
+    color: #080B18;
+}
+
+.rejected {
+    background: #ff4757;
+    color: white;
+}
+
+.empty {
+    color: #aeb3c8;
+    text-align: center;
+    padding: 25px;
+}
+
+/* CUSTOMER MANAGEMENT */
+
+.customer {
+    background: #222640;
+    border: 1px solid #3b405d;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.customer h3 {
+    color: #00D6C9;
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+.customer p {
+    margin-top: 7px;
+    color: #d5d8e5;
+    overflow-wrap: anywhere;
+}
+
+.customer details {
+    margin-top: 15px;
+    border-top: 1px solid #3b405d;
+    padding-top: 12px;
+}
+
+.customer summary {
+    color: #9B5CFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.customer-history-item {
+    background: #171a2d;
+    border-radius: 7px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.customer-history-item p {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+@media(max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">WIN7 ADMIN</div>
+
+    <button id="logoutBtn" class="logout hidden">
+        LOG OUT
+    </button>
+</header>
+
+<div class="container">
+
+    <!-- ADMIN LOGIN -->
+
+    <div id="loginSection" class="card">
+
+        <h1>Admin Login</h1>
+
+        <p class="muted">
+            Sign in using your authorized Google account.
+        </p>
+
+        <button id="loginBtn" class="primary">
+            SIGN IN WITH GOOGLE
+        </button>
+
+        <p id="status"></p>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div id="dashboard" class="hidden">
+
+        <!-- WELCOME -->
+
+        <div class="card">
+
+            <h1>Welcome, Admin!</h1>
+
+            <p class="muted" id="adminEmail"></p>
+
+            <p class="muted">
+                WIN7 Management Dashboard
+            </p>
+
+        </div>
+
+        <!-- ORDER STATISTICS -->
+
+        <div class="card">
+
+            <h2>Order Statistics</h2>
+
+            <p class="muted" style="margin-top:8px;">
+                Overview of all customer orders
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <p>TOTAL ORDERS</p>
+                    <h2 id="totalOrders">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>PENDING ORDERS</p>
+                    <h2 id="pendingOrders">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>APPROVED ORDERS</p>
+                    <h2 id="approvedOrders">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>REJECTED ORDERS</p>
+                    <h2 id="rejectedOrders">0</h2>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- AVAILABLE GAMES -->
+
+        <div class="card">
+
+            <h2>Available Games</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <p>GAME 1</p>
+                    <h2>50 Tickets</h2>
+                    <p>100 Birr each</p>
+                </div>
+
+                <div class="stat">
+                    <p>GAME 2</p>
+                    <h2>30 Tickets</h2>
+                    <p>200 Birr each</p>
+                </div>
+
+                <div class="stat">
+                    <p>GAME 3</p>
+                    <h2>Coming Soon</h2>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- GAME PERFORMANCE -->
+
+        <div class="card">
+
+            <h2>Game Performance</h2>
+
+            <p class="muted" style="margin-top:8px;">
+                Overview of Game 1 and Game 2 activity
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <p>GAME 1 ORDERS</p>
+                    <h2 id="game1Orders">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>GAME 2 ORDERS</p>
+                    <h2 id="game2Orders">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>GAME 1 TICKETS</p>
+                    <h2 id="game1Tickets">0</h2>
+                </div>
+
+                <div class="stat">
+                    <p>GAME 2 TICKETS</p>
+                    <h2 id="game2Tickets">0</h2>
+                </div>
+
+            </div>
+
+            <div class="stat total-value">
+
+                <p>TOTAL DEMO ORDER VALUE</p>
+
+                <h2 id="totalOrderValue">0 Birr</h2>
+
+                <p class="muted" style="margin-top:8px;">
+                    Includes pending, approved and rejected demo orders.
+                    This is not actual revenue.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- ORDER MANAGEMENT -->
+
+        <div class="card">
+
+            <div class="orders-header">
+
+                <div>
+                    <h2>Order Management</h2>
+
+                    <p class="muted" style="margin-top:8px;">
+                        Orders from Game 1 and Game 2
+                    </p>
+                </div>
+
+                <button id="refreshBtn" class="refresh">
+                    REFRESH ORDERS
+                </button>
+
+            </div>
+
+            <p id="orderMessage" class="muted">
+                Loading orders...
+            </p>
+
+            <div id="ordersList"></div>
+
+        </div>
+
+        <!-- CUSTOMER MANAGEMENT -->
+
+        <div class="card">
+
+            <div class="orders-header">
+
+                <div>
+                    <h2>Customer Management</h2>
+
+                    <p class="muted" style="margin-top:8px;">
+                        Customers who have submitted at least one order
+                    </p>
+                </div>
+
+                <p id="customerCount" class="muted">
+                    0 customers
+                </p>
+
+            </div>
+
+            <p id="customerMessage" class="muted">
+                Customer information will appear here.
+            </p>
+
+            <div id="customersList"></div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- FIREBASE JAVASCRIPT -->
+
+<script type="module">
+
+// FIREBASE IMPORTS
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    doc,
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// FIREBASE CONFIGURATION
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAKhGdBzND-5g7BCZvnhetaxjotCs92TNg",
+    authDomain: "win7-dc908.firebaseapp.com",
+    projectId: "win7-dc908",
+    appId: "1:908163339911:web:8742dab21da4debef00a22"
+};
+
+
+// INITIALIZE FIREBASE
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const provider = new GoogleAuthProvider();
+
+
+// ADMIN UID
+
+const ADMIN_UID = "uHSAT6wflhQrboZiZLJtAlgXXbs1";
+
+
+// HTML ELEMENTS
+
+const loginSection = document.getElementById("loginSection");
+const dashboard = document.getElementById("dashboard");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const status = document.getElementById("status");
+
+const ordersList = document.getElementById("ordersList");
+const orderMessage = document.getElementById("orderMessage");
+const refreshBtn = document.getElementById("refreshBtn");
+
+const customersList = document.getElementById("customersList");
+const customerMessage = document.getElementById("customerMessage");
+const customerCount = document.getElementById("customerCount");
+
+
+// GOOGLE LOGIN
+
+loginBtn.addEventListener("click", async () => {
+
+    status.textContent = "Signing in...";
+    loginBtn.disabled = true;
+
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        status.textContent = error.message;
+    } finally {
+        loginBtn.disabled = false;
+    }
+
+});
+
+
+// CHECK ADMIN ACCOUNT
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (user && user.uid === ADMIN_UID) {
+
+        loginSection.classList.add("hidden");
+        dashboard.classList.remove("hidden");
+        logoutBtn.classList.remove("hidden");
+
+        document.getElementById("adminEmail").textContent =
+            user.email || "Admin account";
+
+        await loadOrders();
+
+    } else {
+
+        dashboard.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
+
+        if (user) {
+
+            status.textContent =
+                "Access denied. This account is not an administrator.";
+
+            await signOut(auth);
+        }
+    }
+
+});
+
+
+// LOG OUT
+
+logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+});
+
+
+// LOAD ORDERS FROM FIRESTORE
+
+async function loadOrders() {
+
+    ordersList.replaceChildren();
+    orderMessage.textContent = "Loading orders...";
+    refreshBtn.disabled = true;
+
+    try {
+
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        const orders = [];
+
+        snapshot.forEach((documentSnapshot) => {
+
+            orders.push({
+                id: documentSnapshot.id,
+                ...documentSnapshot.data()
+            });
+
+        });
+
+
+        // ORDER STATISTICS
+
+        const total = orders.length;
+
+        const pending = orders.filter(order =>
+            (order.status || "pending").toLowerCase() === "pending"
+        ).length;
+
+        const approved = orders.filter(order =>
+            (order.status || "").toLowerCase() === "approved"
+        ).length;
+
+        const rejected = orders.filter(order =>
+            (order.status || "").toLowerCase() === "rejected"
+        ).length;
+
+
+        document.getElementById("totalOrders").textContent = total;
+        document.getElementById("pendingOrders").textContent = pending;
+        document.getElementById("approvedOrders").textContent = approved;
+        document.getElementById("rejectedOrders").textContent = rejected;
+
+
+        // GAME-WISE STATISTICS
+
+        const game1 = orders.filter(order =>
+            order.game === "Game 1"
+        );
+
+        const game2 = orders.filter(order =>
+            order.game === "Game 2"
+        );
+
+
+        const game1TicketCount = game1.reduce(
+            (total, order) =>
+                total + Number(order.ticketCount || 0),
+            0
+        );
+
+        const game2TicketCount = game2.reduce(
+            (total, order) =>
+                total + Number(order.ticketCount || 0),
+            0
+        );
+
+
+        // TOTAL DEMO ORDER VALUE
+
+        const totalOrderAmount = orders.reduce(
+            (total, order) =>
+                total + Number(order.amount || 0),
+            0
+        );
+
+
+        // DISPLAY GAME STATISTICS
+
+        document.getElementById("game1Orders").textContent =
+            game1.length;
+
+        document.getElementById("game2Orders").textContent =
+            game2.length;
+
+        document.getElementById("game1Tickets").textContent =
+            game1TicketCount;
+
+        document.getElementById("game2Tickets").textContent =
+            game2TicketCount;
+
+        document.getElementById("totalOrderValue").textContent =
+            totalOrderAmount.toLocaleString() + " Birr";
+
+
+        // NEWEST ORDERS FIRST
+
+        orders.sort((a, b) => {
+
+            const dateA = a.createdAt?.toMillis?.() || 0;
+            const dateB = b.createdAt?.toMillis?.() || 0;
+
+            return dateB - dateA;
+
+        });
+
+
+        // DISPLAY CUSTOMERS
+
+        renderCustomers(orders);
+
+
+        // NO ORDERS
+
+        if (orders.length === 0) {
+
+            orderMessage.textContent = "No orders found.";
+            return;
+
+        }
+
+
+        orderMessage.textContent =
+            "Total orders: " + orders.length;
+
+
+        // DISPLAY EACH ORDER
+
+        orders.forEach((order) => {
+
+            const orderCard = document.createElement("div");
+            orderCard.className = "order";
+
+
+            const title = document.createElement("h3");
+            title.textContent = order.game || "Unknown Game";
+
+
+            const email = document.createElement("p");
+            email.textContent =
+                "Customer: " + (order.email || "Not available");
+
+
+            const numbers = document.createElement("p");
+            numbers.textContent =
+                "Selected Numbers: " +
+                (Array.isArray(order.numbers)
+                    ? order.numbers.join(", ")
+                    : "Not available");
+
+
+            const tickets = document.createElement("p");
+            tickets.textContent =
+                "Ticket Count: " + (order.ticketCount ?? 0);
+
+
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Total Amount: " + (order.amount ?? 0) + " Birr";
+
+
+            const date = document.createElement("p");
+
+            let dateText = "Date: Not available";
+
+            if (order.createdAt?.toDate) {
+                dateText =
+                    "Date: " +
+                    order.createdAt.toDate().toLocaleString();
+            }
+
+            date.textContent = dateText;
+
+
+            // ORDER STATUS
+
+            const orderStatus = document.createElement("span");
+
+            const currentStatus =
+                String(order.status || "pending").toLowerCase();
+
+            orderStatus.className =
+                "order-status " +
+                (["pending", "approved", "rejected"].includes(currentStatus)
+                    ? currentStatus
+                    : "pending");
+
+            orderStatus.textContent = currentStatus;
+
+
+            // ACTION BUTTONS
+
+            const actions = document.createElement("div");
+            actions.className = "order-actions";
+
+            const approveBtn = document.createElement("button");
+            approveBtn.className = "approve";
+            approveBtn.textContent = "APPROVE";
+
+            const rejectBtn = document.createElement("button");
+            rejectBtn.className = "reject";
+            rejectBtn.textContent = "REJECT";
+
+
+            if (currentStatus === "pending") {
+
+                approveBtn.addEventListener("click", () => {
+                    updateOrderStatus(order.id, "approved");
+                });
+
+                rejectBtn.addEventListener("click", () => {
+                    updateOrderStatus(order.id, "rejected");
+                });
+
+                actions.append(approveBtn, rejectBtn);
+
+            } else {
+
+                const completed = document.createElement("p");
+                completed.className = "muted";
+                completed.textContent =
+                    "This order has already been reviewed.";
+
+                actions.appendChild(completed);
+
+            }
+
+
+            orderCard.append(
+                title,
+                email,
+                numbers,
+                tickets,
+                amount,
+                date,
+                orderStatus,
+                actions
+            );
+
+            ordersList.appendChild(orderCard);
+
+        });
+
+    } catch (error) {
+
+        console.error("Order loading error:", error);
+
+        orderMessage.textContent =
+            "Could not load orders: " + error.message;
+
+    } finally {
+
+        refreshBtn.disabled = false;
+
+    }
+
+}
+
+
+// CUSTOMER MANAGEMENT
+// Groups existing orders by customer UID.
+// Shows customers who placed orders, not every registered account.
+
+function renderCustomers(orders) {
+
+    customersList.replaceChildren();
+
+    const customerMap = new Map();
+
+
+    orders.forEach((order) => {
+
+        const customerKey =
+            order.uid || order.email || "unknown-customer";
+
+        if (!customerMap.has(customerKey)) {
+
+            customerMap.set(customerKey, {
+                email: order.email || "Email not available",
+                orders: [],
+                totalTickets: 0
+            });
+
+        }
+
+        const customer = customerMap.get(customerKey);
+
+        customer.orders.push(order);
+
+        customer.totalTickets += Number(order.ticketCount || 0);
+
+        if (
+            customer.email === "Email not available" &&
+            order.email
+        ) {
+            customer.email = order.email;
+        }
+
+    });
+
+
+    const customers = Array.from(customerMap.values());
+
+    customers.sort((a, b) =>
+        b.orders.length - a.orders.length
+    );
+
+
+    customerCount.textContent =
+        customers.length +
+        (customers.length === 1 ? " customer" : " customers");
+
+
+    if (customers.length === 0) {
+
+        customerMessage.textContent =
+            "No customers have submitted orders yet.";
+
+        return;
+
+    }
+
+
+    customerMessage.textContent =
+        "Showing " + customers.length +
+        " customer(s) from the existing order records.";
+
+
+    customers.forEach((customer) => {
+
+        const card = document.createElement("div");
+        card.className = "customer";
+
+
+        const heading = document.createElement("h3");
+        heading.textContent = customer.email;
+
+
+        const orderCount = document.createElement("p");
+        orderCount.textContent =
+            "Total Orders: " + customer.orders.length;
+
+
+        const ticketCount = document.createElement("p");
+        ticketCount.textContent =
+            "Total Tickets: " + customer.totalTickets;
+
+
+        const details = document.createElement("details");
+
+        const summary = document.createElement("summary");
+        summary.textContent = "VIEW ORDER HISTORY";
+
+        details.appendChild(summary);
+
+
+        customer.orders.forEach((order, index) => {
+
+            const historyItem = document.createElement("div");
+            historyItem.className = "customer-history-item";
+
+
+            const orderTitle = document.createElement("p");
+            orderTitle.textContent =
+                "Order " + (index + 1) +
+                " — " + (order.game || "Unknown Game");
+
+
+            const selectedNumbers = document.createElement("p");
+            selectedNumbers.textContent =
+                "Selected Numbers: " +
+                (Array.isArray(order.numbers)
+                    ? order.numbers.join(", ")
+                    : "Not available");
+
+
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Amount: " +
+                Number(order.amount || 0).toLocaleString() +
+                " Birr";
+
+
+            const orderStatus = document.createElement("p");
+            orderStatus.textContent =
+                "Status: " +
+                String(order.status || "pending").toUpperCase();
+
+
+            const date = document.createElement("p");
+
+            date.textContent = order.createdAt?.toDate
+                ? "Date: " + order.createdAt.toDate().toLocaleString()
+                : "Date: Not available";
+
+
+            historyItem.append(
+                orderTitle,
+                selectedNumbers,
+                amount,
+                orderStatus,
+                date
+            );
+
+            details.appendChild(historyItem);
+
+        });
+
+
+        card.append(
+            heading,
+            orderCount,
+            ticketCount,
+            details
+        );
+
+        customersList.appendChild(card);
+
+    });
+
+}
+
+
+// APPROVE OR REJECT ORDER
+
+async function updateOrderStatus(orderId, newStatus) {
+
+    const confirmation = confirm(
+        "Are you sure you want to mark this demo order as " +
+        newStatus.toUpperCase() + "?"
+    );
+
+    if (!confirmation) return;
+
+
+    try {
+
+        await updateDoc(
+            doc(db, "orders", orderId),
+            {
+                status: newStatus
+            }
+        );
+
+        alert("Demo order status updated successfully!");
+
+        await loadOrders();
+
+    } catch (error) {
+
+        console.error("Update error:", error);
+
+        alert("Could not update order: " + error.message);
+
+    }
+
+}
+
+
+// REFRESH ORDERS
+
+refreshBtn.addEventListener("click", async () => {
+    await loadOrders();
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WIN7 | Your Luck. Your Moment.</title>
+
+    <style>
+
+        /* =========================
+           GENERAL SETTINGS
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+       body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+
+    background-image:
+        linear-gradient(
+            rgba(8, 11, 24, 0.45),
+            rgba(8, 11, 24, 0.65)
+        ),
+        url("images/win7-hero.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: white;
+}
+.user-welcome {
+    color: #00D6C9;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(0, 214, 201, 0.5);
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: rgba(155, 92, 255, 0.15);
+    border: 1px solid #9B5CFF;
+    border-radius: 40px;
+}
+
+.user-profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00D6C9;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-details strong {
+    color: white;
+    font-size: 13px;
+}
+
+.user-details span {
+    color: #00D6C9;
+    font-size: 11px;
+}
+
+.logout-btn {
+    background: #9B5CFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            width: 100%;
+            min-height: 85px;
+            padding: 20px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #080B18;
+            border-bottom: 1px solid rgba(155, 92, 255, 0.3);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 900;
+            color: #00D6C9;
+            letter-spacing: 3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00D6C9;
+        }
+
+        /* =========================
+           HOMEPAGE HERO
+        ========================= */
+
+        .hero {
+            min-height: 650px;
+            padding: 60px 6%;
+
+            display: grid;
+            grid-template-columns: 0.9fr 2fr 0.9fr;
+            align-items: center;
+            gap: 20px;
+
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(8, 11, 24, 0.35),
+                    rgba(8, 11, 24, 0.05),
+                    rgba(8, 11, 24, 0.35)
+                ),
+                url("images/win7-hero.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* LEFT CONTENT */
+
+        .left-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            color: #00D6C9;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 22px;
+        }
+
+        /* LEFT CONTENT */
+
+.left-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-label {
+    color: #00D6C9;
+    font-size: 14px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 22px;
+}
+
+.left-content h1 {
+    font-size: clamp(48px, 6vw, 76px);
+    line-height: 1.05;
+    font-weight: 1000;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.left-content h1 span {
+    color: #9B5CFF;
+    font-weight: 1000;
+    text-shadow: 0 0 15px rgba(155, 92, 255, 0.7);
+}
+
+.left-content p {
+    margin-top: 22px;
+    color: #FFFFFF;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* GET STARTED BUTTON */
+
+.get-started-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #9B5CFF, #00D6C9);
+    color: #080B18;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+        .get-started-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 20px rgba(0, 214, 201, 0.3);
+        }
+
+        /* CENTER SPACE */
+
+        .center-content {
+            min-height: 300px;
+        }
+
+        /* =========================
+           RIGHT EXPERIENCE PANEL
+        ========================= */
+
+        .right-content {
+            position: relative;
+            z-index: 2;
+
+            background: rgba(8, 11, 24, 0.22);
+            border: 1px solid rgba(155, 92, 255, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+
+            backdrop-filter: blur(3px);
+        }
+
+        .welcome-tag {
+            color: #00D6C9;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .right-content h2 {
+            font-size: 27px;
+            line-height: 1.3;
+            margin-bottom: 18px;
+        }
+
+        .right-content h2 span {
+            color: #9B5CFF;
+        }
+
+        .welcome-description {
+            font-size: 13px;
+            color: #FFFFFF;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           LUCKY NUMBER SELECTION
+        ========================= */
+
+        .number-box {
+            background: rgba(155, 92, 255, 0.12);
+            border: 1px solid rgba(155, 92, 255, 0.7);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .number-title {
+            color: #00D6C9;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+        .lucky-numbers {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .lucky-number {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+
+            border-radius: 50%;
+            border: 1px solid #9B5CFF;
+
+            background: #21113F;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .lucky-number:hover,
+        .lucky-number.active {
+            background: #00D6C9;
+            color: #080B18;
+            border-color: #00D6C9;
+            transform: scale(1.1);
+        }
+
+        .selected-number {
+            color: #FFFFFF;
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        .selected-number strong {
+            color: #00D6C9;
+        }
+
+        /* EXPLORE NOW BUTTON */
+
+        .welcome-btn {
+            display: inline-block;
+            background: linear-gradient(
+                135deg,
+                #9B5CFF,
+                #00D6C9
+            );
+
+            color: #080B18;
+            padding: 14px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 214, 201, 0.3);
+        }
+
+        /* =========================
+           GAME SELECTION SECTION
+        ========================= */
+
+        .games-section {
+    padding: 100px 6%;
+    min-height: 650px;
+
+    background-image:
+        linear-gradient(
+            rgba(8, 11, 24, 0.35),
+            rgba(8, 11, 24, 0.55)
+        ),
+        url("images/win7-hero.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+        }
+
+        /* GAME CONTAINER */
+
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+
+            max-width: 1100px;
+            margin: 50px auto 0;
+        }
+
+        /* GAME CARDS */
+
+        .game-card {
+            background: linear-gradient(
+                145deg,
+                #17112D,
+                #0D1022
+            );
+
+            border: 1px solid #9B5CFF;
+            border-radius: 18px;
+            padding: 35px 20px;
+            transition: 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #00D6C9;
+
+            box-shadow:
+                0 10px 30px rgba(155, 92, 255, 0.2);
+        }
+
+        .game-icon {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        .game-number {
+            color: #00D6C9;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .game-card h3 {
+            font-size: 27px;
+            margin: 15px 0;
+        }
+
+        .game-card p {
+            color: #c5bfd3;
+            font-size: 13px;
+            line-height: 1.7;
+            min-height: 45px;
+        }
+
+        .game-card button {
+            background: linear-gradient(
+                135deg,
+                #9B5CFF,
+                #00D6C9
+            );
+
+            border: none;
+            border-radius: 25px;
+            padding: 13px 22px;
+            margin-top: 20px;
+
+            font-weight: bold;
+            cursor: pointer;
+            color: #080B18;
+            transition: 0.3s;
+        }
+
+        .game-card button:hover {
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           DEMO MESSAGE
+        ========================= */
+
+        .demo-message {
+            display: none;
+            max-width: 500px;
+            margin: 35px auto 0;
+            padding: 20px;
+
+            border: 1px solid #00D6C9;
+            background: #11192A;
+            border-radius: 12px;
+
+            color: white;
+            line-height: 1.7;
+        }
+
+        .demo-message.show {
+            display: block;
+        }
+
+        .demo-message span {
+            color: #00D6C9;
+            font-weight: bold;
+        }
+
+        /* =========================
+           ABOUT SECTION
+        ========================= */
+
+        .about-section {
+            padding: 70px 6%;
+            text-align: center;
+            background: #110C24;
+        }
+
+        .about-section h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .about-section h2 span {
+            color: #9B5CFF;
+        }
+
+        .about-section p {
+            max-width: 650px;
+            margin: auto;
+            color: #c5bfd3;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer.bottom {
+            width: 100%;
+            min-height: 90px;
+            padding: 30px 6%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                120deg,
+                #080B18,
+                #21113F,
+                #080B18
+            );
+
+            border-top: 2px solid #9B5CFF;
+        }
+
+        footer.bottom p {
+            color: white;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        footer.bottom p span {
+            color: #00D6C9;
+            font-weight: 900;
+        }
+
+        /* =========================
+           TABLET RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .hero {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .center-content {
+                display: none;
+            }
+
+            .left-content h1 {
+                font-size: 43px;
+            }
+
+            .games-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 50px 6%;
+                gap: 35px;
+
+                background-position: center;
+            }
+
+            .left-content {
+                text-align: center;
+            }
+
+            .left-content h1 {
+                font-size: 43px;
+            }
+
+            .right-content {
+                max-width: 450px;
+                width: 100%;
+                margin: auto;
+            }
+
+            .games-container {
+                grid-template-columns: 1fr;
+            }
+
+            .games-heading h2 {
+                font-size: 25px;
+            }
+
+            footer.bottom p {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+   <header>
+
+    <div class="logo">WIN7</div>
+
+    <nav>
+        <a href="#home">HOME</a>
+        <a href="#games">GAMES</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+    </nav>
+
+    <div class="user-profile" id="userProfile" style="display: none;">
+
+        <img id="userPhoto" src="" alt="Profile">
+
+        <div class="user-details">
+            <strong id="profileName">User</strong>
+            <span id="profileEmail">Email</span>
+        </div>
+
+        <button id="logoutBtn" class="logout-btn">
+            LOGOUT
+        </button>
+
+    </div>
+
+</header>
+
+
+    <!-- =========================
+         HOMEPAGE
+    ========================= -->
+
+    <section class="hero" id="home">
+
+        <!-- LEFT SIDE -->
+
+        <div class="left-content">
+
+            <div class="hero-label">
+                WELCOME TO WIN7
+            </div>
+
+            <h1>
+                YOUR<br>
+                LUCK.<br>
+                YOUR<br>
+                <span>MOMENT.</span>
+            </h1>
+
+            <p>
+                Discover a new digital experience.
+                Your next exciting moment starts here.
+            </p>
+
+            <a href="auth.html" class="get-started-btn">
+    GET STARTED ↗
+</a>
+
+        </div>
+
+
+        <!-- CENTER SPACE -->
+
+        <div class="center-content"></div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="right-content">
+
+            <div class="welcome-tag">
+                WIN7 EXPERIENCE
+            </div>
+
+            <h2>
+                CHOOSE YOUR<br>
+                <span>LUCKY NUMBER</span>
+            </h2>
+
+            <p class="welcome-description">
+                Explore our sample experience and
+                discover what WIN7 has prepared for you.
+            </p>
+
+
+            <!-- LUCKY NUMBER SELECTION -->
+
+            <div class="number-box">
+
+                <div class="number-title">
+                    CHOOSE YOUR LUCKY NUMBER
+                </div>
+
+                <div class="lucky-numbers">
+
+                    <button
+                        class="lucky-number"
+                        type="button"
+                        onclick="selectLuckyNumber(3, this)">
+                        3
+                    </button>
+
+                    <button
+                        class="lucky-number"
+                        type="button"
+                        onclick="selectLuckyNumber(7, this)">
+                        7
+                    </button>
+
+                    <button
+                        class="lucky-number"
+                        type="button"
+                        onclick="selectLuckyNumber(9, this)">
+                        9
+                    </button>
+
+                </div>
+
+                <div class="selected-number">
+                    Your selected number:
+                    <strong id="selectedNumber">None</strong>
+                </div>
+
+            </div>
+
+
+            <!-- EXPLORE NOW -->
+
+            <a href="#games" class="welcome-btn">
+                EXPLORE NOW ↗
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         THREE GAMES
+    ========================= -->
+
+    <section class="games-section" id="games">
+
+        <div class="games-heading">
+
+            <span>WELCOME TO WIN7</span>
+
+            <h2>
+                CHOOSE YOUR <span>EXPERIENCE</span>
+            </h2>
+
+            <p>
+                Discover something exciting.
+                Choose your experience below.
+            </p>
+
+        </div>
+
+
+        <div class="games-container">
+
+
+            <!-- GAME 1 -->
+
+            <div class="game-card">
+
+                <div class="game-icon">🎮</div>
+
+                <span class="game-number">
+                    GAME 01
+                </span>
+
+                <h3>ተጫወት!</h3>
+
+                <p>
+                    Get ready for a fun and exciting
+                    demo experience.
+                </p>
+
+                <button
+    type="button"
+    onclick="window.location.href='game1.html'">
+
+    EXPLORE GAME ↗
+
+</button>
+
+            </div>
+
+
+            <!-- GAME 2 -->
+
+            <div class="game-card">
+
+                <div class="game-icon">✨</div>
+
+                <span class="game-number">
+                    GAME 02
+                </span>
+
+                <h3>አስገርም!</h3>
+
+                <p>
+                    Discover a surprising and
+                    entertaining demo.
+                </p>
+
+                <button
+                    type="button"
+                    onclick="showDemo('አስገርም!')">
+
+                    EXPLORE GAME ↗
+
+                </button>
+
+            </div>
+
+
+            <!-- GAME 3 -->
+
+            <div class="game-card">
+
+                <div class="game-icon">🎁</div>
+
+                <span class="game-number">
+                    GAME 03
+                </span>
+
+                <h3>ወስደው!</h3>
+
+                <p>
+                    Explore a new and interesting
+                    demo experience.
+                </p>
+
+                <button
+                    type="button"
+                    onclick="showDemo('ወስደው!')">
+
+                    EXPLORE GAME ↗
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- GAME DEMO MESSAGE -->
+
+        <div class="demo-message" id="demoMessage">
+
+            <span id="demoTitle"></span>
+
+            <p>
+                Welcome to WIN7!
+                This is a demonstration.
+                Your game experience is coming soon!
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section class="about-section" id="about">
+
+        <h2>
+            ABOUT <span>WIN7</span>
+        </h2>
+
+        <p>
+           WELCOME TO WIN7!
+
+Welcome to WIN7! We're excited to have you here. Explore our creative digital world, discover exciting experiences, and enjoy our modern interactive website.
+
+ABOUT THE FOUNDER
+
+WIN7 was founded by Henok Alebachew, a second-year Mechanical Engineering student at Jimma University.
+
+Henok is passionate about technology, creativity, innovation, and digital development. WIN7 represents his vision of combining creativity and technology to build exciting digital experiences.
+
+           Thank you for being part of the WIN7 journey!
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="bottom" id="contact">
+
+        <p>
+            © 2026 <span>WIN7</span> — ALL RIGHTS RESERVED.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+        <!-- YOUR EXISTING JAVASCRIPT -->
+
+    <script>
+
+        // SELECT LUCKY NUMBER
+
+        function selectLuckyNumber(number, button) {
+
+            document.getElementById("selectedNumber")
+                .textContent = number;
+
+            const buttons = document.querySelectorAll(".lucky-number");
+
+            buttons.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+        }
+
+
+        // SHOW GAME DEMONSTRATION
+
+        function showDemo(gameName) {
+
+            const message = document.getElementById("demoMessage");
+            const title = document.getElementById("demoTitle");
+
+            title.textContent = gameName;
+
+            message.classList.add("show");
+
+            message.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+    </script>
+
+
+    <!-- FIREBASE AUTHENTICATION -->
+
+    
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// USE THE SAME FIREBASE CONFIG FROM auth.html
+const firebaseConfig = {
+    apiKey: "AIzaSyAKhGdBzND-5g7BCZvnhetaxjotCs92TNg",
+    authDomain: "https://win7-dc908.firebaseapp.com",
+    projectId: "win7-dc908",
+    storageBucket: "https://win7-dc908.firebasestorage.app",
+    messagingSenderId: "908163339911",
+    appId: "1:908163339911:web:8742dab21da4debef00a22"
+};
+
+// CONNECT FIREBASE
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// GET HTML ELEMENTS
+const userProfile = document.getElementById("userProfile");
+const userPhoto = document.getElementById("userPhoto");
+const profileName = document.getElementById("profileName");
+const profileEmail = document.getElementById("profileEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+// CHECK LOGIN
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        userPhoto.src = user.photoURL ||
+            "https://placehold.co/100x100?text=User";
+
+        profileName.textContent = user.displayName || "WIN7 User";
+        profileEmail.textContent = user.email || "";
+
+        userProfile.style.display = "flex";
+    } else {
+        userProfile.style.display = "none";
+    }
+});
+
+// LOGOUT
+logoutBtn.addEventListener("click", async () => {
+    try {
+        await signOut(auth);
+        window.location.href = "auth.html";
+    } catch (error) {
+        alert("Logout failed: " + error.message);
+    }
+});
+
+</script>
+
+</body>
+</html>

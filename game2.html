@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIN7 - Game 2</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background:
+        linear-gradient(rgba(8,11,24,.88), rgba(8,11,24,.94)),
+        url("images/win7-hero.png") center/cover fixed;
+    color: white;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    color: #9B5CFF;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.back {
+    color: white;
+    text-decoration: none;
+    background: #24243b;
+    padding: 12px 18px;
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #bbb;
+    margin-bottom: 25px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.info-card {
+    background: #171a2d;
+    border: 1px solid #37304f;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.info-card h2 {
+    color: #00D6C9;
+    margin-top: 8px;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.number {
+    padding: 17px 5px;
+    border: 1px solid #9B5CFF;
+    background: #171a2d;
+    color: white;
+    border-radius: 9px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.number:hover {
+    background: #54318a;
+}
+
+.number.selected {
+    background: #00D6C9;
+    color: #080B18;
+    border-color: #00D6C9;
+}
+
+.summary, .payment {
+    background: #171a2d;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #37304f;
+}
+
+.summary p {
+    margin: 12px 0;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 20px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.primary {
+    background: #9B5CFF;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.primary:hover:not(:disabled) {
+    background: #00D6C9;
+    color: #080B18;
+}
+
+.primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.copy {
+    background: #00D6C9;
+    color: #080B18;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type="file"] {
+    margin-top: 15px;
+    max-width: 100%;
+}
+
+#preview {
+    max-width: 100%;
+    max-height: 250px;
+    display: none;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.warning {
+    color: #ffd66b;
+    background: #302817;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+#message {
+    margin-top: 15px;
+    color: #00D6C9;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+@media(max-width: 550px) {
+    .numbers {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+    }
+
+    .number {
+        padding: 14px 3px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <div class="logo">WIN7</div>
+    <a class="back" href="index.html">← HOME</a>
+</header>
+
+<h1>GAME 02</h1>
+<p class="subtitle">Choose your lucky numbers!</p>
+
+<div class="info">
+    <div class="info-card">
+        <p>Total Tickets</p>
+        <h2>30</h2>
+    </div>
+
+    <div class="info-card">
+        <p>Price Per Ticket</p>
+        <h2>200 Birr</h2>
+    </div>
+</div>
+
+<h3 style="margin-bottom:15px;">SELECT YOUR NUMBERS</h3>
+
+<div class="numbers" id="numbers"></div>
+
+<div class="summary">
+    <h2>Your Selection</h2>
+
+    <p>
+        Selected Numbers:
+        <strong id="selectedNumbers">None</strong>
+    </p>
+
+    <p>
+        Number of Tickets:
+        <strong id="count">0</strong>
+    </p>
+
+    <p>
+        Total Price:
+        <strong id="total">0 Birr</strong>
+    </p>
+
+    <button class="primary" onclick="continuePayment()">
+        CONTINUE
+    </button>
+</div>
+
+<div class="payment hidden" id="payment">
+
+    <h2>DEMO PAYMENT INFORMATION</h2>
+
+    <div class="warning">
+        This is a demonstration website only. Do not send real money.
+        No payment is collected or verified.
+    </div>
+
+    <p style="margin-top:15px;">
+        Account Holder:
+        <strong>Henok Alebachew</strong>
+    </p>
+
+    <p style="margin-top:15px;">
+        Telebirr:
+        <strong>0901889915</strong>
+    </p>
+
+    <button class="copy" onclick="copyText('0901889915')">
+        COPY TELEBIRR
+    </button>
+
+    <p style="margin-top:20px;">
+        CBE:
+        <strong>1000719035594</strong>
+    </p>
+
+    <button class="copy" onclick="copyText('1000719035594')">
+        COPY CBE
+    </button>
+
+    <hr style="margin:20px 0;border-color:#444;">
+
+    <h3>DEMO RECEIPT PREVIEW</h3>
+
+    <p style="margin-top:10px;">
+        Choose an image to preview:
+    </p>
+
+    <input type="file" id="receipt" accept="image/*">
+
+    <img id="preview" alt="Receipt preview">
+
+    <p class="warning">
+        Demo only: this image is previewed on your device.
+        It is not uploaded or saved in Firebase.
+    </p>
+
+    <button
+        class="primary"
+        id="submitButton"
+        onclick="submitDemo()">
+
+        SUBMIT DEMO ORDER
+
+    </button>
+
+    <p id="message"></p>
+
+</div>
+
+</div>
+
+
+<!-- FIREBASE JAVASCRIPT -->
+
+<script type="module">
+
+// FIREBASE IMPORTS
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* REPLACE WITH YOUR FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyAKhGdBzND-5g7BCZvnhetaxjotCs92TNg",
+
+    authDomain: "win7-dc908.firebaseapp.com",
+
+    projectId: "win7-dc908",
+
+    appId: "1:908163339911:web:8742dab21da4debef00a22"
+
+};
+
+
+// INITIALIZE FIREBASE
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+// CHECK LOGGED-IN USER
+
+let currentUser = null;
+
+onAuthStateChanged(auth, function(user) {
+    currentUser = user;
+});
+
+
+// GAME SETTINGS
+
+const TICKET_PRICE = 200;
+
+const TOTAL_NUMBERS = 30;
+
+let selected = [];
+
+const numbersContainer = document.getElementById("numbers");
+
+
+// CREATE 30 NUMBERS
+
+for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+
+    button.className = "number";
+
+    button.textContent = String(i).padStart(2, "0");
+
+    button.onclick = () => selectNumber(i, button);
+
+    numbersContainer.appendChild(button);
+
+}
+
+
+// SELECT OR REMOVE NUMBER
+
+function selectNumber(number, button) {
+
+    if (selected.includes(number)) {
+
+        selected = selected.filter(n => n !== number);
+
+        button.classList.remove("selected");
+
+    } else {
+
+        selected.push(number);
+
+        button.classList.add("selected");
+
+    }
+
+    updateSummary();
+
+}
+
+
+// UPDATE SUMMARY
+
+function updateSummary() {
+
+    selected.sort((a, b) => a - b);
+
+    document.getElementById("selectedNumbers").textContent =
+
+        selected.length
+            ? selected.map(n => String(n).padStart(2, "0")).join(", ")
+            : "None";
+
+    document.getElementById("count").textContent =
+        selected.length;
+
+    document.getElementById("total").textContent =
+        (selected.length * TICKET_PRICE).toLocaleString() + " Birr";
+
+}
+
+
+// CONTINUE TO PAYMENT
+
+function continuePayment() {
+
+    if (selected.length === 0) {
+
+        alert("Please select at least one number.");
+
+        return;
+
+    }
+
+    document.getElementById("payment").classList.remove("hidden");
+
+    document.getElementById("payment").scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// COPY PAYMENT DETAILS
+
+function copyText(value) {
+
+    navigator.clipboard.writeText(value)
+
+        .then(() => alert("Copied!"))
+
+        .catch(() => alert("Please copy manually: " + value));
+
+}
+
+
+// RECEIPT IMAGE PREVIEW
+
+document.getElementById("receipt").addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    const preview = document.getElementById("preview");
+
+    document.getElementById("message").textContent = "";
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+
+        alert("Please choose an image.");
+
+        this.value = "";
+
+        preview.style.display = "none";
+
+        return;
+
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        alert("Image must be smaller than 5 MB.");
+
+        this.value = "";
+
+        preview.style.display = "none";
+
+        return;
+
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        preview.src = e.target.result;
+
+        preview.style.display = "block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+// SUBMIT DEMO ORDER TO FIRESTORE
+
+async function submitDemo() {
+
+    const file = document.getElementById("receipt").files[0];
+
+    const message = document.getElementById("message");
+
+    const submitButton = document.getElementById("submitButton");
+
+
+    // CHECK SIGN-IN
+
+    if (!currentUser) {
+
+        alert("Please sign in first.");
+
+        window.location.href = "auth.html";
+
+        return;
+
+    }
+
+
+    // CHECK NUMBER SELECTION
+
+    if (selected.length === 0) {
+
+        alert("Please select at least one number.");
+
+        return;
+
+    }
+
+
+    // CHECK RECEIPT PREVIEW
+
+    if (!file) {
+
+        alert("Please choose a demo image first.");
+
+        return;
+
+    }
+
+
+    const count = selected.length;
+
+    const total = count * TICKET_PRICE;
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent = "SAVING DEMO ORDER...";
+
+
+    try {
+
+        await addDoc(collection(db, "orders"), {
+
+            uid: currentUser.uid,
+
+            email: currentUser.email || "",
+
+            game: "Game 2",
+
+            numbers: [...selected],
+
+            ticketCount: count,
+
+            amount: total,
+
+            status: "pending",
+
+            createdAt: serverTimestamp()
+
+        });
+
+
+        message.textContent =
+            "GAME 2 DEMO ORDER SAVED SUCCESSFULLY! Your order is pending.";
+
+
+        submitButton.textContent = "DEMO ORDER SAVED";
+
+
+    } catch (error) {
+
+        console.error("Firestore error:", error);
+
+        message.textContent = "ERROR: " + error.message;
+
+        submitButton.disabled = false;
+
+        submitButton.textContent = "TRY AGAIN";
+
+    }
+
+}
+
+
+// MAKE FUNCTIONS AVAILABLE TO HTML BUTTONS
+
+window.continuePayment = continuePayment;
+
+window.copyText = copyText;
+
+window.submitDemo = submitDemo;
+
+</script>
+
+</body>
+</html>
